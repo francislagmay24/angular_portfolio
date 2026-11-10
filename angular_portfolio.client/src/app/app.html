@@ -1,0 +1,25 @@
+﻿<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" routerLink="/">{{ brand }}</a>
+
+    <nav class="header-nav" aria-label="Portfolio sections">
+      @for (section of nav; track section.id) {
+        <button type="button" class="nav-link" (click)="goToSection(section.id)">
+          {{ section.label }}
+        </button>
+      }
+    </nav>
+
+    <div class="header-auth">
+      @if (auth.isAuthenticated()) {
+        <a routerLink="/dashboard" class="header-link">Dashboard</a>
+      } @else {
+        <a routerLink="/login" class="header-link">Sign in</a>
+      }
+    </div>
+  </div>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>

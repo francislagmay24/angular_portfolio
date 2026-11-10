@@ -1,0 +1,78 @@
+/* ==========================================================================
+   Global theme. Component styles reference these custom properties, so you
+   can restyle the whole site from this single block.
+   ========================================================================== */
+
+:root {
+  /* Dark by default. Delete this block and keep only the light values below
+     if you would rather ship a light theme. */
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface-alt: #10151c;
+  --border: #293040;
+  --text: #e6edf3;
+  --text-muted: #9aa7b8;
+  --accent: #4d9fff;
+  --accent-strong: #2d84f0;
+  --accent-glow: rgb(77 159 255 / 12%);
+  --success: #3fb950;
+  --danger: #f85149;
+  --danger-bg: rgb(248 81 73 / 10%);
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Keeps anchored section headings clear of the sticky header. */
+  scroll-padding-top: 5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

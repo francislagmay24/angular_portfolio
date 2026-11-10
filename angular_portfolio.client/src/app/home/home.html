@@ -1,0 +1,232 @@
+<!-- ============================== HERO ============================== -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">{{ content.hero.title }}</p>
+    <h1 class="hero-name">{{ content.hero.name }}</h1>
+    <p class="hero-value">{{ content.hero.valueProposition }}</p>
+
+    <div class="hero-actions">
+      <button type="button" class="btn btn-primary" (click)="scrollTo('projects')">
+        View Projects
+      </button>
+      <button type="button" class="btn btn-ghost" (click)="scrollTo('contact')">
+        Get in Touch
+      </button>
+    </div>
+
+    <ul class="hero-socials">
+      @for (link of content.contact.socials; track link.url) {
+        <li>
+          <a [href]="link.url" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<!-- ============================= PROJECTS ============================= -->
+<section class="section" id="projects">
+  <header class="section-head">
+    <h2>Projects</h2>
+    <p class="section-sub">A few things I have built and shipped.</p>
+  </header>
+
+  <div class="project-grid">
+    @for (project of content.projects; track project.title) {
+      <article class="project-card">
+        <div class="project-media">
+          @if (project.imageUrl) {
+            <img [src]="project.imageUrl" [alt]="project.title + ' screenshot'" loading="lazy" />
+          } @else {
+            <div class="project-media-placeholder" aria-hidden="true">
+              <span>{{ project.title }}</span>
+            </div>
+          }
+        </div>
+
+        <div class="project-body">
+          <h3>{{ project.title }}</h3>
+          <p class="project-desc">{{ project.description }}</p>
+
+          <ul class="tech-list">
+            @for (item of project.tech; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+
+          <div class="project-links">
+            @if (project.liveUrl) {
+              <a [href]="project.liveUrl" target="_blank" rel="noopener noreferrer">Live demo</a>
+            }
+            @if (project.repoUrl) {
+              <a [href]="project.repoUrl" target="_blank" rel="noopener noreferrer">Source code</a>
+            }
+          </div>
+        </div>
+      </article>
+    }
+  </div>
+</section>
+
+<!-- ============================== SKILLS ============================== -->
+<section class="section section-alt" id="skills">
+  <header class="section-head">
+    <h2>Skills &amp; Technologies</h2>
+    <p class="section-sub">Tools I use day to day.</p>
+  </header>
+
+  <div class="skills-grid">
+    @for (group of content.skills; track group.category) {
+      <div class="skill-group">
+        <h3>{{ group.category }}</h3>
+        <ul>
+          @for (item of group.items; track item) {
+            <li>{{ item }}</li>
+          }
+        </ul>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- =============================== ABOUT ============================== -->
+<section class="section" id="about">
+  <header class="section-head">
+    <h2>{{ content.about.heading }}</h2>
+  </header>
+
+  <div class="about-body">
+    @for (paragraph of content.about.paragraphs; track $index) {
+      <p>{{ paragraph }}</p>
+    }
+  </div>
+</section>
+
+<!-- ============================== CONTACT ============================= -->
+<section class="section section-alt" id="contact">
+  <header class="section-head">
+    <h2>Get in Touch</h2>
+    <p class="section-sub">
+      Have a role in mind, or just want to say hello? Send a message — it goes straight to my inbox.
+    </p>
+  </header>
+
+  <div class="contact-layout">
+    <!-- ------------------------- contact details ------------------------- -->
+    <aside class="contact-details">
+      <dl>
+        <dt>Email</dt>
+        <dd>
+          <a [href]="'mailto:' + content.contact.email">{{ content.contact.email }}</a>
+        </dd>
+
+        <dt>Location</dt>
+        <dd>{{ content.contact.location }}</dd>
+      </dl>
+
+      <ul class="contact-socials">
+        @for (link of content.contact.socials; track link.url) {
+          <li>
+            <a [href]="link.url" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
+          </li>
+        }
+      </ul>
+
+      <a class="btn btn-primary resume-btn" [href]="content.contact.resumeUrl" download>
+        Download Resume
+      </a>
+    </aside>
+
+    <!-- --------------------------- contact form -------------------------- -->
+    <div class="contact-form-wrap">
+      @if (sent) {
+        <div class="form-notice form-success" role="status">
+          <strong>Thanks — your message has been sent.</strong>
+          <p>I will get back to you as soon as I can.</p>
+          <button type="button" class="btn btn-ghost" (click)="sent = false">
+            Send another message
+          </button>
+        </div>
+      } @else {
+        <form class="contact-form" (ngSubmit)="submit()" #contactForm="ngForm" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="cf-name">Name <span class="req">*</span></label>
+              <input
+                id="cf-name"
+                name="name"
+                type="text"
+                [(ngModel)]="form.name"
+                required
+                maxlength="120"
+                autocomplete="name"
+              />
+            </div>
+
+            <div class="field">
+              <label for="cf-email">Email <span class="req">*</span></label>
+              <input
+                id="cf-email"
+                name="email"
+                type="email"
+                [(ngModel)]="form.email"
+                required
+                maxlength="256"
+                autocomplete="email"
+              />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="cf-company">Company <span class="optional">(optional)</span></label>
+            <input
+              id="cf-company"
+              name="company"
+              type="text"
+              [(ngModel)]="form.company"
+              maxlength="160"
+              autocomplete="organization"
+            />
+          </div>
+
+          <div class="field">
+            <label for="cf-message">Message <span class="req">*</span></label>
+            <textarea
+              id="cf-message"
+              name="message"
+              rows="6"
+              [(ngModel)]="form.message"
+              required
+              maxlength="4000"
+            ></textarea>
+          </div>
+
+          <!-- Honeypot: hidden from people, irresistible to bots. -->
+          <div class="honeypot" aria-hidden="true">
+            <label for="cf-website">Leave this field empty</label>
+            <input
+              id="cf-website"
+              name="website"
+              type="text"
+              [(ngModel)]="form.website"
+              tabindex="-1"
+              autocomplete="off"
+            />
+          </div>
+
+          @if (error) {
+            <p class="form-notice form-error" role="alert">{{ error }}</p>
+          }
+
+          <button type="submit" class="btn btn-primary" [disabled]="sending || contactForm.invalid">
+            {{ sending ? 'Sending…' : 'Send Message' }}
+          </button>
+        </form>
+      }
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <p>&copy; {{ year }} {{ content.hero.name }}. Built with Angular and ASP.NET Core.</p>
+</footer>

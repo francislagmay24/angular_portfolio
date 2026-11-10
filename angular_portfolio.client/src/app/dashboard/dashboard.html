@@ -1,0 +1,43 @@
+<section class="dash">
+  <header class="dash-head">
+    <div>
+      <h1>Dashboard</h1>
+      <p class="dash-sub">
+        Signed in as <strong>{{ auth.user()?.displayName }}</strong>
+        ({{ auth.user()?.email }}) &middot; {{ auth.user()?.role }}
+      </p>
+    </div>
+    <button type="button" class="dash-logout" (click)="logout()">Sign out</button>
+  </header>
+
+  <h2 class="dash-section-title">Contact messages</h2>
+
+  @if (loading()) {
+    <p class="dash-muted">Loading messages…</p>
+  } @else if (error()) {
+    <p class="dash-error" role="alert">{{ error() }}</p>
+  } @else if (messages().length === 0) {
+    <p class="dash-muted">
+      No messages yet. Submit the form on the
+      <a routerLink="/">portfolio page</a> to see one appear here.
+    </p>
+  } @else {
+    <div class="msg-list">
+      @for (msg of messages(); track msg.id) {
+        <article class="msg" [class.msg-handled]="msg.isHandled">
+          <header class="msg-head">
+            <div>
+              <strong>{{ msg.name }}</strong>
+              <a [href]="'mailto:' + msg.email" class="msg-email">{{ msg.email }}</a>
+              @if (msg.company) {
+                <span class="msg-company">{{ msg.company }}</span>
+              }
+            </div>
+            <time class="msg-time">{{ formatDate(msg.createdUtc) }}</time>
+          </header>
+          <p class="msg-body">{{ msg.message }}</p>
+        </article>
+      }
+    </div>
+  }
+</section>

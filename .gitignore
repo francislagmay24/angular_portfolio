@@ -1,0 +1,59 @@
+# ---- .NET / ASP.NET Core ----
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+*.dll
+*.pdb
+*.cache
+project.assets.json
+project.nuget.cache
+*.nuget.dgspec.json
+*.nuget.g.props
+*.nuget.g.targets
+
+# Local secrets must never be committed.
+appsettings.*.local.json
+secrets.json
+*.pfx
+*.pem
+*.key
+
+# ---- Angular / Node ----
+node_modules/
+dist/
+out-tsc/
+bazel-out/
+.angular/
+.sass-cache/
+connect.lock
+coverage/
+libpeerconnection.log
+testem.log
+__screenshots__/
+npm-debug.log*
+yarn-error.log*
+
+# ---- Editors ----
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/mcp.json
+*.swp
+*~
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Local agent/tooling scratch ----
+.reasonix/
